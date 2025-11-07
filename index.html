@@ -16,21 +16,19 @@
 
         /* Main “TV screen” */
         .screen {
-            width: 1080px;
-            height: 920px;
-            max-width: 100vw;
-            max-height: 100vh;
-            margin: 0 auto;
             position: relative;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
             overflow: hidden;
-            color: #fff;
             background-color: #000;
+            color: #fff;
         }
-
-        /* FRONT POSTER */
+        
+        /* FRONT POSTER (full-screen background) */
         #homeScreen {
             background: url("background.png") no-repeat center center;
-            background-size: contain;
+            background-size: cover; /* ✅ now fills the whole screen */
         }
 
         .label-layer {
@@ -244,6 +242,7 @@
 
 </body>
 </html>
+
 
 
 
