@@ -33,14 +33,13 @@
             background-size: contain; /* show whole image, no cut */
         }
 
-        /* Inner layer that matches the central background width
-           (9:16 image inside 1080x920 gives ~48% width) */
+        /* Inner layer that matches the central background width */
         .label-layer {
             position: absolute;
             left: 50%;
             top: 0;
             transform: translateX(-50%);
-            width: 48%;   /* ✅ now exactly inside the blue background */
+            width: 48%;   /* matches the visible blue area width */
             height: 100%;
         }
 
@@ -53,7 +52,7 @@
         /* Clickable titles */
         .title-button {
             position: absolute;
-            font-size: 2.4vh;      /* a bit smaller to avoid overlap */
+            font-size: 2.4vh;      /* sized for readability without crowding */
             font-weight: 800;
             cursor: pointer;
             text-shadow: 0 0 10px rgba(0,0,0,0.9);
@@ -64,14 +63,16 @@
             transform: scale(1.04);
         }
 
+        /* Center “DOST-GIA Program” – one line, yellow */
         .center-title {
             position: absolute;
             left: 50%;
-            top: 40%;   /* slightly higher, gives more space below */
+            top: 36%;   /* slightly above exact center */
             transform: translate(-50%, -50%);
-            font-size: 4.5vh;
+            font-size: 4.2vh;
             font-weight: 900;
-            color: #ffc800;               /* yellow text */
+            color: #ffc800;
+            white-space: nowrap;           /* ✅ keep on one line */
             text-shadow: 0 0 12px rgba(0,0,0,0.9);
         }
 
@@ -81,7 +82,7 @@
             inset: 0;
             width: 100%;
             height: 100%;
-            object-fit: contain;    /* keep full slide visible */
+            object-fit: contain;
             background-color: #000;
         }
 
@@ -131,58 +132,61 @@
     <!-- All labels sit inside the central blue area -->
     <div class="label-layer">
 
-        <!-- Big center title -->
+        <!-- Center title -->
         <div class="center-title">
             DOST-GIA Program
         </div>
 
-        <!-- LEFT column (inside blue) -->
-        <div class="title-button" style="top: 10%; left: 0;"
+        <!-- TOP pair (near your top highlights) -->
+        <div class="title-button" style="top: 9%; left: 3%;"
              onclick="openTopic('mandate')">
             Mandate
         </div>
 
-        <div class="title-button" style="top: 22%; left: 0;"
-             onclick="openTopic('avail')">
-            Who may avail?
-        </div>
-
-        <div class="title-button" style="top: 55%; left: 0;"
-             onclick="openTopic('requirements')">
-            Requirements
-        </div>
-
-        <div class="title-button" style="top: 67%; left: 0;"
-             onclick="openTopic('evaluation')">
-            Evaluation Period
-        </div>
-
-        <!-- RIGHT column (inside blue) -->
-        <div class="title-button" style="top: 10%; right: 0;"
+        <div class="title-button" style="top: 9%; right: 3%;"
              onclick="openTopic('funding')">
             Funding Agencies
         </div>
 
-        <div class="title-button" style="top: 22%; right: 0;"
+        <!-- SECOND pair (Who may avail / Objective) -->
+        <div class="title-button" style="top: 22%; left: 3%;"
+             onclick="openTopic('avail')">
+            Who may avail?
+        </div>
+
+        <div class="title-button" style="top: 22%; right: 3%;"
              onclick="openTopic('objective')">
             Objective
         </div>
 
-        <div class="title-button" style="top: 34%; right: 0;"
+        <!-- MIDDLE right slot (Timeline) -->
+        <div class="title-button" style="top: 40%; right: 3%;"
              onclick="openTopic('timeline')">
             Timeline
         </div>
 
-        <div class="title-button" style="top: 55%; right: 0;"
+        <!-- MID-LOW pair (Requirements / Assistance Coverage)
+             placed around your middle highlights under the title -->
+        <div class="title-button" style="top: 52%; left: 3%;"
+             onclick="openTopic('requirements')">
+            Requirements
+        </div>
+
+        <div class="title-button" style="top: 52%; right: 3%;"
              onclick="openTopic('coverage')">
             Assistance Coverage
         </div>
 
-        <div class="title-button" style="top: 67%; right: 0;"
+        <!-- LOWER pair (Evaluation Period / Recipients) -->
+        <div class="title-button" style="top: 65%; left: 3%;"
+             onclick="openTopic('evaluation')">
+            Evaluation Period
+        </div>
+
+        <div class="title-button" style="top: 65%; right: 3%;"
              onclick="openTopic('recipients')">
             Recipients of GIA Funds
         </div>
-
     </div>
 </div>
 
