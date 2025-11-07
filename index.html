@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOST-GIA Interactive Display</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: #000;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                         "Segoe UI", sans-serif;
+        }
+
+        /* Main “TV screen” – 1080 x 1920 portrait */
+        .screen {
+            width: 1080px;
+            height: 1920px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        /* FRONT POSTER (your interactive slide = 2.png) */
+        #homeScreen {
+            background: url("background.png") no-repeat center center;
+            background-size: cover;
+        }
+
+        /* DETAIL SCREEN (shows PNG slides full-screen) */
+        #detailScreen {
+            display: none;
+            background: #000;
+        }
+
+        /* Clickable titles on the front poster */
+        .title-button {
+            position: absolute;
+            font-size: 48px;
+            font-weight: 800;
+            cursor: pointer;
+            text-shadow: 0 0 10px rgba(0,0,0,0.9);
+            user-select: none;
+            white-space: nowrap;
+        }
+        .title-button:hover {
+            transform: scale(1.04);
+        }
+
+        .center-title {
+            position: absolute;
+            left: 50%;
+            top: 47%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            font-weight: 900;
+            text-shadow: 0 0 12px rgba(0,0,0,0.9);
+        }
+
+        /* Detail screen: PNG slide fills the whole area */
+        .detail-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* your slides are 1080 x 1920 */
+        }
+
+        /* Back + navigation buttons */
+        .back-button,
+        .nav-button {
+            position: absolute;
+            z-index: 10;
+            border: none;
+            border-radius: 999px;
+            padding: 18px 32px;
+            font-size: 36px;
+            font-weight: 700;
+            cursor: pointer;
+            background: rgba(0,0,0,0.75);
+            color: #fff;
+            box-shadow: 0 0 12px rgba(0,0,0,0.8);
+            user-select: none;
+        }
+
+        .back-button {
+            top: 80px;
+            left: 70px;
+        }
+
+        .nav-button {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .nav-left  { left: 40px; }
+        .nav-right { right: 40px; }
+
+        .back-button:hover,
+        .nav-button:hover {
+            transform: translateY(-50%) scale(1.05);
+        }
+        .back-button:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<!-- HOME SCREEN (PIC 1) -->
+<div id="homeScreen" class="screen">
+
+    <!-- Big center title (optional, for hitbox help) -->
+    <div class="center-title">
+        DOST-GIA Program
+    </div>
+
+    <!-- Clickable areas – adjust positions if you want -->
+    <div class="title-button" style="top: 260px; left: 80px;"
+         onclick="openTopic('mandate')">
+        Mandate
+    </div>
+
+    <div class="title-button" style="top: 260px; right: 80px;"
+         onclick="openTopic('funding')">
+        Funding Agencies
+    </div>
+
+    <div class="title-button" style="top: 420px; left: 80px;"
+         onclick="openTopic('avail')">
+        Who may avail?
+    </div>
+
+    <div class="title-button" style="top: 420px; right: 80px;"
+         onclick="openTopic('objective')">
+        Objective
+    </div>
+
+    <div class="title-button" style="top: 580px; right: 80px;"
+         onclick="openTopic('timeline')">
+        Timeline
+    </div>
+
+    <div class="title-button" style="top: 780px; left: 80px;"
+         onclick="openTopic('requirements')">
+        Requirements
+    </div>
+
+    <div class="title-button" style="top: 780px; right: 80px;"
+         onclick="openTopic('coverage')">
+        Assistance Coverage
+    </div>
+
+    <div class="title-button" style="top: 940px; left: 80px;"
+         onclick="openTopic('evaluation')">
+        Evaluation Period
+    </div>
+
+    <div class="title-button" style="top: 940px; right: 80px;"
+         onclick="openTopic('recipients')">
+        Recipients of GIA Funds
+    </div>
+
+</div>
+
+<!-- DETAIL SCREEN (DESCRIPTION SLIDES) -->
+<div id="detailScreen" class="screen">
+    <!-- PNG slide viewer -->
+    <img id="detailImage" class="detail-image" src="" alt="">
+
+    <!-- Buttons on top of the image -->
+    <button class="back-button" onclick="goHome()">← Back</button>
+    <button id="prevBtn" class="nav-button nav-left" onclick="prevSlide()">◀</button>
+    <button id="nextBtn" class="nav-button nav-right" onclick="nextSlide()">▶</button>
+</div>
+
+<script>
+    /*
+     * Connect to your actual PNG filenames
+     * (exactly as shown in your folder screenshot).
+     */
+    const topicImages = {
+        mandate: [
+            "mandate.png"
+        ],
+        avail: [
+            "who may avail.png"
+        ],
+        funding: [
+            "funding agencies.png"
+        ],
+        objective: [
+            "objective.png"
+        ],
+        timeline: [
+            "timelinechoose.png",
+            "timeline dost.png",
+            "timeline non dost.png"
+        ],
+        requirements: [
+            "requirements1.png",
+            "requirements2.png"
+        ],
+        coverage: [
+            "assistancecoverage.png"
+        ],
+        evaluation: [
+            "evaluationperiod.png"
+        ],
+        recipients: [
+            "recipient.png"
+        ]
+        // If you want to use "2.png" for anything else,
+        // you can add it in one of the arrays above.
+    };
+
+    let currentTopic = null;
+    let currentIndex = 0;
+
+    const homeScreen   = document.getElementById("homeScreen");
+    const detailScreen = document.getElementById("detailScreen");
+    const detailImage  = document.getElementById("detailImage");
+    const prevBtn      = document.getElementById("prevBtn");
+    const nextBtn      = document.getElementById("nextBtn");
+
+    function openTopic(key) {
+        const slides = topicImages[key];
+        if (!slides || slides.length === 0) {
+            alert("No slide image set for topic: " + key);
+            return;
+        }
+        currentTopic = key;
+        currentIndex = 0;
+        showSlide();
+
+        homeScreen.style.display = "none";
+        detailScreen.style.display = "block";
+    }
+
+    function showSlide() {
+        const slides = topicImages[currentTopic];
+        if (!slides) return;
+
+        detailImage.src = slides[currentIndex];
+
+        // show/hide navigation buttons depending on number of slides
+        if (slides.length > 1) {
+            prevBtn.style.display = "block";
+            nextBtn.style.display = "block";
+        } else {
+            prevBtn.style.display = "none";
+            nextBtn.style.display = "none";
+        }
+    }
+
+    function prevSlide() {
+        const slides = topicImages[currentTopic];
+        if (!slides || slides.length <= 1) return;
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        showSlide();
+    }
+
+    function nextSlide() {
+        const slides = topicImages[currentTopic];
+        if (!slides || slides.length <= 1) return;
+        currentIndex = (currentIndex + 1) % slides.length;
+        showSlide();
+    }
+
+    function goHome() {
+        detailScreen.style.display = "none";
+        homeScreen.style.display = "block";
+    }
+</script>
+
+</body>
+</html>
