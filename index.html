@@ -14,7 +14,7 @@
             overflow: hidden; /* no scrollbars */
         }
 
-        /* Main “TV screen” – target 1080 x 920, but never larger than viewport */
+        /* Main “TV screen” */
         .screen {
             width: 1080px;
             height: 920px;
@@ -27,23 +27,22 @@
             background-color: #000;
         }
 
-        /* FRONT POSTER (your interactive slide) */
+        /* FRONT POSTER */
         #homeScreen {
             background: url("background.png") no-repeat center center;
-            background-size: contain; /* show whole image, no cut */
+            background-size: contain;
         }
 
-        /* Inner layer that matches the central background width */
         .label-layer {
             position: absolute;
             left: 50%;
             top: 0;
             transform: translateX(-50%);
-            width: 48%;   /* matches the visible blue area width */
+            width: 48%;
             height: 100%;
         }
 
-        /* DETAIL SCREEN (shows PNG slides full-screen) */
+        /* DETAIL SCREEN */
         #detailScreen {
             display: none;
             background: #000;
@@ -52,7 +51,7 @@
         /* Clickable titles */
         .title-button {
             position: absolute;
-            font-size: 2.9vh;      /* sized for readability without crowding */
+            font-size: 2.9vh;
             font-weight: 800;
             cursor: pointer;
             text-shadow: 0 0 10px rgba(0,0,0,0.9);
@@ -63,20 +62,20 @@
             transform: scale(1.04);
         }
 
-        /* Center “DOST-GIA Program” – one line, yellow */
+        /* Center Title */
         .center-title {
             position: absolute;
             left: 50%;
-            top: 42%;   /* slightly above exact center */
+            top: 45%;
             transform: translate(-50%, -50%);
             font-size: 5vh;
             font-weight: 900;
             color: #ffc800;
-            white-space: nowrap;           /* ✅ keep on one line */
+            white-space: nowrap;
             text-shadow: 0 0 12px rgba(0,0,0,0.9);
         }
 
-        /* Detail screen: PNG slide fills the available area, no cropping */
+        /* Slides */
         .detail-image {
             position: absolute;
             inset: 0;
@@ -86,49 +85,49 @@
             background-color: #000;
         }
 
-        /* Back + navigation buttons */
-        /* Keep nav buttons inside the blue area */
+        /* Buttons - INSIDE DESIGN AREA */
         .back-button,
         .nav-button {
             position: absolute;
             z-index: 10;
             border: none;
-            border-radius: 999px;
-            padding: 1vh 2vh;
-            font-size: 2.4vh;
+            border-radius: 40px;
+            padding: 1vh 2.5vh;
+            font-size: 2.5vh;
             font-weight: 700;
             cursor: pointer;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.7);
             color: #fff;
             box-shadow: 0 0 12px rgba(0,0,0,0.8);
             user-select: none;
+            transition: all 0.2s ease;
         }
-        
-        /* Adjust positioning */
+
+        /* Back Button */
         .back-button {
-            top: 3%;
-            left: 25%;
+            top: 4%;
+            left: 6%;
+            background: rgba(0,0,0,0.75);
+            color: #fff;
         }
-        
+
+        /* Left/Right Navigation */
         .nav-left {
-            left: 1%;
+            left: 7%;
         }
-        
         .nav-right {
-            right: 15%;
+            right: 7%;
         }
-        
         .nav-button {
             top: 50%;
             transform: translateY(-50%);
+            padding: 1.5vh 2.5vh;
         }
 
-
-        .nav-left  { left: 2vh; }
-        .nav-right { right: 2vh; }
-
+        /* Hover Effect */
         .back-button:hover,
         .nav-button:hover {
+            background: rgba(255,255,255,0.15);
             transform: translateY(-50%) scale(1.05);
         }
         .back-button:hover {
@@ -138,126 +137,58 @@
 </head>
 <body>
 
-<!-- HOME SCREEN (PIC 1) -->
+<!-- HOME SCREEN -->
 <div id="homeScreen" class="screen">
-    <!-- All labels sit inside the central blue area -->
     <div class="label-layer">
+        <div class="center-title">DOST-GIA Program</div>
 
-        <!-- Center title -->
-        <div class="center-title">
-            DOST-GIA Program
-        </div>
+        <div class="title-button" style="top: 15%; left: 3%;" onclick="openTopic('mandate')">Mandate</div>
+        <div class="title-button" style="top: 17%; right: 3%;" onclick="openTopic('funding')">Funding Agencies</div>
 
-        <!-- TOP pair (near your top highlights) -->
-        <div class="title-button" style="top: 15%; left: 3%;"
-             onclick="openTopic('mandate')">
-            Mandate
-        </div>
+        <div class="title-button" style="top: 24%; left: 3%;" onclick="openTopic('avail')">Who may avail?</div>
+        <div class="title-button" style="top: 26%; right: 3%;" onclick="openTopic('objective')">Objective</div>
 
-        <div class="title-button" style="top: 17%; right: 3%;"
-             onclick="openTopic('funding')">
-            Funding Agencies
-        </div>
+        <div class="title-button" style="top: 50%; right: 3%;" onclick="openTopic('timeline')">Timeline</div>
 
-        <!-- SECOND pair (Who may avail / Objective) -->
-        <div class="title-button" style="top: 24%; left: 3%;"
-             onclick="openTopic('avail')">
-            Who may avail?
-        </div>
+        <div class="title-button" style="top: 55%; left: 3%;" onclick="openTopic('requirements')">Requirements</div>
+        <div class="title-button" style="top: 60%; right: 3%;" onclick="openTopic('coverage')">Assistance Coverage</div>
 
-        <div class="title-button" style="top: 26%; right: 3%;"
-             onclick="openTopic('objective')">
-            Objective
-        </div>
-
-        <!-- MIDDLE right slot (Timeline) -->
-        <div class="title-button" style="top: 50%; right: 3%;"
-             onclick="openTopic('timeline')">
-            Timeline
-        </div>
-
-        <!-- MID-LOW pair (Requirements / Assistance Coverage)
-             placed around your middle highlights under the title -->
-        <div class="title-button" style="top: 55%; left: 3%;"
-             onclick="openTopic('requirements')">
-            Requirements
-        </div>
-
-        <div class="title-button" style="top: 60%; right: 3%;"
-             onclick="openTopic('coverage')">
-            Assistance Coverage
-        </div>
-
-        <!-- LOWER pair (Evaluation Period / Recipients) -->
-        <div class="title-button" style="top: 68%; left: 3%;"
-             onclick="openTopic('evaluation')">
-            Evaluation Period
-        </div>
-
-        <div class="title-button" style="top: 75%; right: 3%;"
-             onclick="openTopic('recipients')">
-            Recipients of GIA Funds
-        </div>
+        <div class="title-button" style="top: 68%; left: 3%;" onclick="openTopic('evaluation')">Evaluation Period</div>
+        <div class="title-button" style="top: 75%; right: 3%;" onclick="openTopic('recipients')">Recipients of GIA Funds</div>
     </div>
 </div>
 
-<!-- DETAIL SCREEN (DESCRIPTION SLIDES) -->
+<!-- DETAIL SCREEN -->
 <div id="detailScreen" class="screen">
-    <!-- PNG slide viewer -->
     <img id="detailImage" class="detail-image" src="" alt="">
 
-    <!-- Buttons on top of the image -->
-    <button class="back-button" onclick="goHome()">←</button>
+    <!-- Buttons -->
+    <button class="back-button" onclick="goHome()">← BACK</button>
     <button id="prevBtn" class="nav-button nav-left" onclick="prevSlide()">◀</button>
     <button id="nextBtn" class="nav-button nav-right" onclick="nextSlide()">▶</button>
 </div>
 
 <script>
-    /*
-     * Connect to your actual PNG filenames
-     * (exactly as shown in your folder / repo).
-     */
     const topicImages = {
-        mandate: [
-            "mandate.png"
-        ],
-        avail: [
-            "who may avail.png"
-        ],
-        funding: [
-            "funding agencies.png"
-        ],
-        objective: [
-            "objective.png"
-        ],
-        timeline: [
-            "timelinechoose.png",
-            "timeline dost.png",
-            "timeline non dost.png"
-        ],
-        requirements: [
-            "requirements1.png",
-            "requirements2.png"
-        ],
-        coverage: [
-            "assistancecoverage.png"
-        ],
-        evaluation: [
-            "evaluationperiod.png"
-        ],
-        recipients: [
-            "recipient.png"
-        ]
+        mandate: ["mandate.png"],
+        avail: ["who may avail.png"],
+        funding: ["funding agencies.png"],
+        objective: ["objective.png"],
+        timeline: ["timelinechoose.png", "timeline dost.png", "timeline non dost.png"],
+        requirements: ["requirements1.png", "requirements2.png"],
+        coverage: ["assistancecoverage.png"],
+        evaluation: ["evaluationperiod.png"],
+        recipients: ["recipient.png"]
     };
 
     let currentTopic = null;
     let currentIndex = 0;
 
-    const homeScreen   = document.getElementById("homeScreen");
+    const homeScreen = document.getElementById("homeScreen");
     const detailScreen = document.getElementById("detailScreen");
-    const detailImage  = document.getElementById("detailImage");
-    const prevBtn      = document.getElementById("prevBtn");
-    const nextBtn      = document.getElementById("nextBtn");
+    const detailImage = document.getElementById("detailImage");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
 
     function openTopic(key) {
         const slides = topicImages[key];
@@ -279,7 +210,6 @@
 
         detailImage.src = slides[currentIndex];
 
-        // show/hide navigation buttons depending on number of slides
         if (slides.length > 1) {
             prevBtn.style.display = "block";
             nextBtn.style.display = "block";
@@ -311,14 +241,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
