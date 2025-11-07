@@ -29,7 +29,8 @@
         /* FRONT POSTER (full-screen background) */
         #homeScreen {
             background: url("background.png") no-repeat center center;
-            background-size: cover; /* ✅ now fills the whole screen */
+            background-size: contain;  /* ✅ shows entire image, keeps footer visible */
+            background-color: #002366; /* ✅ fill background behind PNG */
         }
 
         .label-layer {
@@ -37,7 +38,7 @@
             left: 50%;
             top: 0;
             transform: translateX(-50%);
-            width: 48%;
+            width: 90%;   /* ✅ fill most of visible area for portrait mode */
             height: 100%;
         }
 
@@ -50,10 +51,11 @@
         /* Clickable titles */
         .title-button {
             position: absolute;
-            font-size: 2.9vh;
-            font-weight: 800;
-            cursor: pointer;
+            font-size: 2.8vh;
+            font-weight: 900;
+            color: #fff;                /* ✅ solid white text */
             text-shadow: 0 0 10px rgba(0,0,0,0.9);
+            cursor: pointer;
             user-select: none;
             white-space: nowrap;
         }
@@ -244,6 +246,7 @@
 
 </body>
 </html>
+
 
 
 
