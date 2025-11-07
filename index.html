@@ -11,22 +11,26 @@
             background: #000;
             font-family: system-ui, -apple-system, BlinkMacSystemFont,
                          "Segoe UI", sans-serif;
+            overflow: hidden; /* no scrollbars */
         }
 
-        /* Main “TV screen” – 1080 x 1920 portrait */
+        /* Main “TV screen” – target 1080 x 920, but never larger than viewport */
         .screen {
             width: 1080px;
-            height: 1920px;
+            height: 920px;
+            max-width: 100vw;
+            max-height: 100vh;
             margin: 0 auto;
             position: relative;
             overflow: hidden;
             color: #fff;
+            background-color: #000;
         }
 
-        /* FRONT POSTER (your interactive slide = 2.png) */
+        /* FRONT POSTER (your interactive slide) */
         #homeScreen {
             background: url("background.png") no-repeat center center;
-            background-size: cover;
+            background-size: contain; /* show whole image, no cut */
         }
 
         /* DETAIL SCREEN (shows PNG slides full-screen) */
@@ -38,7 +42,7 @@
         /* Clickable titles on the front poster */
         .title-button {
             position: absolute;
-            font-size: 48px;
+            font-size: 2.6vh;      /* scales with screen height */
             font-weight: 800;
             cursor: pointer;
             text-shadow: 0 0 10px rgba(0,0,0,0.9);
@@ -54,17 +58,19 @@
             left: 50%;
             top: 47%;
             transform: translate(-50%, -50%);
-            font-size: 80px;
+            font-size: 4.5vh;
             font-weight: 900;
             text-shadow: 0 0 12px rgba(0,0,0,0.9);
         }
 
-        /* Detail screen: PNG slide fills the whole area */
+        /* Detail screen: PNG slide fills the available area, no cropping */
         .detail-image {
             position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* your slides are 1080 x 1920 */
+            object-fit: contain;    /* keep full slide visible */
+            background-color: #000;
         }
 
         /* Back + navigation buttons */
@@ -74,8 +80,8 @@
             z-index: 10;
             border: none;
             border-radius: 999px;
-            padding: 18px 32px;
-            font-size: 36px;
+            padding: 1vh 2vh;
+            font-size: 2.4vh;
             font-weight: 700;
             cursor: pointer;
             background: rgba(0,0,0,0.75);
@@ -85,8 +91,8 @@
         }
 
         .back-button {
-            top: 80px;
-            left: 70px;
+            top: 5vh;
+            left: 5vh;
         }
 
         .nav-button {
@@ -94,8 +100,8 @@
             transform: translateY(-50%);
         }
 
-        .nav-left  { left: 40px; }
-        .nav-right { right: 40px; }
+        .nav-left  { left: 2vh; }
+        .nav-right { right: 2vh; }
 
         .back-button:hover,
         .nav-button:hover {
@@ -116,48 +122,48 @@
         DOST-GIA Program
     </div>
 
-    <!-- Clickable areas – adjust positions if you want -->
-    <div class="title-button" style="top: 260px; left: 80px;"
+    <!-- Clickable areas – now positioned as percentages so they fit any height -->
+    <div class="title-button" style="top: 13.5%; left: 8%;"
          onclick="openTopic('mandate')">
         Mandate
     </div>
 
-    <div class="title-button" style="top: 260px; right: 80px;"
+    <div class="title-button" style="top: 13.5%; right: 8%;"
          onclick="openTopic('funding')">
         Funding Agencies
     </div>
 
-    <div class="title-button" style="top: 420px; left: 80px;"
+    <div class="title-button" style="top: 22%; left: 8%;"
          onclick="openTopic('avail')">
         Who may avail?
     </div>
 
-    <div class="title-button" style="top: 420px; right: 80px;"
+    <div class="title-button" style="top: 22%; right: 8%;"
          onclick="openTopic('objective')">
         Objective
     </div>
 
-    <div class="title-button" style="top: 580px; right: 80px;"
+    <div class="title-button" style="top: 30.5%; right: 8%;"
          onclick="openTopic('timeline')">
         Timeline
     </div>
 
-    <div class="title-button" style="top: 780px; left: 80px;"
+    <div class="title-button" style="top: 40.5%; left: 8%;"
          onclick="openTopic('requirements')">
         Requirements
     </div>
 
-    <div class="title-button" style="top: 780px; right: 80px;"
+    <div class="title-button" style="top: 40.5%; right: 8%;"
          onclick="openTopic('coverage')">
         Assistance Coverage
     </div>
 
-    <div class="title-button" style="top: 940px; left: 80px;"
+    <div class="title-button" style="top: 49%; left: 8%;"
          onclick="openTopic('evaluation')">
         Evaluation Period
     </div>
 
-    <div class="title-button" style="top: 940px; right: 80px;"
+    <div class="title-button" style="top: 49%; right: 8%;"
          onclick="openTopic('recipients')">
         Recipients of GIA Funds
     </div>
@@ -170,7 +176,7 @@
     <img id="detailImage" class="detail-image" src="" alt="">
 
     <!-- Buttons on top of the image -->
-    <button class="back-button" onclick="goHome()">← Back</button>
+    <button class="back-button" onclick="goHome()">←</button>
     <button id="prevBtn" class="nav-button nav-left" onclick="prevSlide()">◀</button>
     <button id="nextBtn" class="nav-button nav-right" onclick="nextSlide()">▶</button>
 </div>
@@ -178,7 +184,7 @@
 <script>
     /*
      * Connect to your actual PNG filenames
-     * (exactly as shown in your folder screenshot).
+     * (exactly as shown in your folder / repo).
      */
     const topicImages = {
         mandate: [
@@ -211,8 +217,6 @@
         recipients: [
             "recipient.png"
         ]
-        // If you want to use "2.png" for anything else,
-        // you can add it in one of the arrays above.
     };
 
     let currentTopic = null;
