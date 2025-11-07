@@ -33,13 +33,23 @@
             background-size: contain; /* show whole image, no cut */
         }
 
+        /* Inner layer that matches the central background area */
+        .label-layer {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 70%;          /* adjust if needed (60–75%) */
+            height: 100%;
+        }
+
         /* DETAIL SCREEN (shows PNG slides full-screen) */
         #detailScreen {
             display: none;
             background: #000;
         }
 
-        /* Clickable titles on the front poster */
+        /* Clickable titles */
         .title-button {
             position: absolute;
             font-size: 2.6vh;      /* scales with screen height */
@@ -60,7 +70,7 @@
             transform: translate(-50%, -50%);
             font-size: 4.5vh;
             font-weight: 900;
-            color: #ffc800;               /* ✅ YELLOW TEXT */
+            color: #ffc800;               /* yellow text */
             text-shadow: 0 0 12px rgba(0,0,0,0.9);
         }
 
@@ -117,58 +127,62 @@
 
 <!-- HOME SCREEN (PIC 1) -->
 <div id="homeScreen" class="screen">
+    <!-- All labels sit inside the central blue area -->
+    <div class="label-layer">
 
-    <!-- Big center title -->
-    <div class="center-title">
-        DOST-GIA Program
+        <!-- Big center title -->
+        <div class="center-title">
+            DOST-GIA Program
+        </div>
+
+        <!-- Left column -->
+        <div class="title-button" style="top: 13.5%; left: 0;"
+             onclick="openTopic('mandate')">
+            Mandate
+        </div>
+
+        <div class="title-button" style="top: 22%; left: 0;"
+             onclick="openTopic('avail')">
+            Who may avail?
+        </div>
+
+        <div class="title-button" style="top: 40.5%; left: 0;"
+             onclick="openTopic('requirements')">
+            Requirements
+        </div>
+
+        <div class="title-button" style="top: 49%; left: 0;"
+             onclick="openTopic('evaluation')">
+            Evaluation Period
+        </div>
+
+        <!-- Right column -->
+        <div class="title-button" style="top: 13.5%; right: 0;"
+             onclick="openTopic('funding')">
+            Funding Agencies
+        </div>
+
+        <div class="title-button" style="top: 22%; right: 0;"
+             onclick="openTopic('objective')">
+            Objective
+        </div>
+
+        <div class="title-button" style="top: 30.5%; right: 0;"
+             onclick="openTopic('timeline')">
+            Timeline
+        </div>
+
+        <div class="title-button" style="top: 40.5%; right: 0;"
+             onclick="openTopic('coverage')">
+            Assistance Coverage
+        </div>
+
+        <div class="title-button" style="top: 49%; right: 0;"
+             onclick="openTopic('recipients')">
+            Recipients of GIA Funds
+        </div>
+
     </div>
-
-    <!-- Clickable areas -->
-    <div class="title-button" style="top: 13.5%; left: 8%;"
-         onclick="openTopic('mandate')">
-        Mandate
-    </div>
-
-    <div class="title-button" style="top: 13.5%; right: 8%;"
-         onclick="openTopic('funding')">
-        Funding Agencies
-    </div>
-
-    <div class="title-button" style="top: 22%; left: 8%;"
-         onclick="openTopic('avail')">
-        Who may avail?
-    </div>
-
-    <div class="title-button" style="top: 22%; right: 8%;"
-         onclick="openTopic('objective')">
-        Objective
-    </div>
-
-    <div class="title-button" style="top: 30.5%; right: 8%;"
-         onclick="openTopic('timeline')">
-        Timeline
-    </div>
-
-    <div class="title-button" style="top: 40.5%; left: 8%;"
-         onclick="openTopic('requirements')">
-        Requirements
-    </div>
-
-    <div class="title-button" style="top: 40.5%; right: 8%;"
-         onclick="openTopic('coverage')">
-        Assistance Coverage
-    </div>
-
-    <div class="title-button" style="top: 49%; left: 8%;"
-         onclick="openTopic('evaluation')">
-        Evaluation Period
-    </div>
-
-    <div class="title-button" style="top: 49%; right: 8%;"
-         onclick="openTopic('recipients')">
-        Recipients of GIA Funds
-    </div>
-
 </div>
 
 <!-- DETAIL SCREEN (DESCRIPTION SLIDES) -->
