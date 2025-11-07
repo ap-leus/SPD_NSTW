@@ -33,13 +33,14 @@
             background-size: contain; /* show whole image, no cut */
         }
 
-        /* Inner layer that matches the central background area */
+        /* Inner layer that matches the central background width
+           (9:16 image inside 1080x920 gives ~48% width) */
         .label-layer {
             position: absolute;
             left: 50%;
             top: 0;
             transform: translateX(-50%);
-            width: 70%;          /* adjust if needed (60–75%) */
+            width: 48%;   /* ✅ now exactly inside the blue background */
             height: 100%;
         }
 
@@ -52,7 +53,7 @@
         /* Clickable titles */
         .title-button {
             position: absolute;
-            font-size: 2.6vh;      /* scales with screen height */
+            font-size: 2.4vh;      /* a bit smaller to avoid overlap */
             font-weight: 800;
             cursor: pointer;
             text-shadow: 0 0 10px rgba(0,0,0,0.9);
@@ -66,7 +67,7 @@
         .center-title {
             position: absolute;
             left: 50%;
-            top: 47%;
+            top: 40%;   /* slightly higher, gives more space below */
             transform: translate(-50%, -50%);
             font-size: 4.5vh;
             font-weight: 900;
@@ -135,8 +136,8 @@
             DOST-GIA Program
         </div>
 
-        <!-- Left column -->
-        <div class="title-button" style="top: 13.5%; left: 0;"
+        <!-- LEFT column (inside blue) -->
+        <div class="title-button" style="top: 10%; left: 0;"
              onclick="openTopic('mandate')">
             Mandate
         </div>
@@ -146,18 +147,18 @@
             Who may avail?
         </div>
 
-        <div class="title-button" style="top: 40.5%; left: 0;"
+        <div class="title-button" style="top: 55%; left: 0;"
              onclick="openTopic('requirements')">
             Requirements
         </div>
 
-        <div class="title-button" style="top: 49%; left: 0;"
+        <div class="title-button" style="top: 67%; left: 0;"
              onclick="openTopic('evaluation')">
             Evaluation Period
         </div>
 
-        <!-- Right column -->
-        <div class="title-button" style="top: 13.5%; right: 0;"
+        <!-- RIGHT column (inside blue) -->
+        <div class="title-button" style="top: 10%; right: 0;"
              onclick="openTopic('funding')">
             Funding Agencies
         </div>
@@ -167,17 +168,17 @@
             Objective
         </div>
 
-        <div class="title-button" style="top: 30.5%; right: 0;"
+        <div class="title-button" style="top: 34%; right: 0;"
              onclick="openTopic('timeline')">
             Timeline
         </div>
 
-        <div class="title-button" style="top: 40.5%; right: 0;"
+        <div class="title-button" style="top: 55%; right: 0;"
              onclick="openTopic('coverage')">
             Assistance Coverage
         </div>
 
-        <div class="title-button" style="top: 49%; right: 0;"
+        <div class="title-button" style="top: 67%; right: 0;"
              onclick="openTopic('recipients')">
             Recipients of GIA Funds
         </div>
