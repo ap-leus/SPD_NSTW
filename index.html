@@ -60,14 +60,13 @@ html, body {
   position: relative;
   font-size: 5vh;
   font-weight: 900;
-  color: #ffc800; /* keep gold text color */
+  color: #ffc800;
   white-space: nowrap;
-  text-shadow: 0 0 4px rgba(0, 0, 0, 0.8); /* simple shadow only */
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
   z-index: 2;
   animation: pulseGlow 2.5s infinite ease-in-out;
 }
 
-/* Subtle white pulse instead of yellow glow */
 @keyframes pulseGlow {
   0% {
     text-shadow: 0 0 6px rgba(0,0,0,0.9);
@@ -82,7 +81,6 @@ html, body {
     transform: scale(1);
   }
 }
-
 
 /* Clickable titles */
 .title-button {
@@ -107,7 +105,6 @@ html, body {
   0%,100% { transform: translateY(0); }
   50% { transform: translateY(-5px); }
 }
-
 
 /* Detail screen */
 #detailScreen {
@@ -152,119 +149,291 @@ html, body {
   transform: translateY(-50%) scale(1.08);
 }
 .back-button:hover { transform: scale(1.08); }
+
+.challenge-button {
+  position: absolute;
+  font-size: 2.8vh;
+  font-weight: 900;
+  color: #fff;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 14%;
+  white-space: nowrap;
+  cursor: pointer;
+  text-shadow: 0 0 8px rgba(0,0,0,0.8);
+  background: rgba(255, 255, 255, 0.15);
+  padding: 1vh 3vh;
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.5);
+  box-shadow: 0 0 12px rgba(255,255,255,0.5);
+  animation: challengePulse 2s ease-in-out infinite;
+  transition: 0.3s;
+}
+
+.challenge-button:hover {
+  color: #ffd700;
+  text-shadow: 0 0 10px #fff, 0 0 15px #ffd700;
+  box-shadow: 0 0 18px #fff, 0 0 25px #ffd700;
+  transform: translateX(-50%) scale(1.05);
+}
+
+@keyframes challengePulse {
+  0% { opacity: 0.9; }
+  50% { opacity: 1; }
+  100% { opacity: 0.9; }
+}
 </style>
 </head>
 <body>
 
-<!-- HOME SCREEN -->
-<div id="homeScreen" class="screen">
-  <div class="label-layer">
-    <!-- Highlight Panel -->
-    <div class="highlight-panel">
-      <div class="center-title">DOST-GIA Program</div>
+  <!-- HOME SCREEN -->
+  <div id="homeScreen" class="screen">
+    <div class="label-layer">
+      <!-- Highlight Panel -->
+      <div class="highlight-panel">
+        <div class="center-title">DOST-GIA Program</div>
+      </div>
+
+      <!-- Titles -->
+      <div class="title-button" style="top: 15%; left: 3%;" onclick="openTopic('mandate')">Mandate</div>
+      <div class="title-button" style="top: 17%; right: 3%;" onclick="openTopic('funding')">Funding Agencies</div>
+
+      <div class="title-button" style="top: 22%; left: 3%;" onclick="openTopic('avail')">Who may avail?</div>
+      <div class="title-button" style="top: 25%; right: 3%;" onclick="openTopic('objective')">Objective</div>
+      <div class="title-button" style="top: 30%; left: 3%;" onclick="openTopic('timeline')">Timeline</div>
+
+      <div class="title-button" style="top: 56%; left: 3%;" onclick="openTopic('requirements')">Requirements</div>
+      <div class="title-button" style="top: 60%; right: 3%;" onclick="openTopic('coverage')">Assistance Coverage</div>
+
+      <div class="title-button" style="top: 66%; left: 3%;" onclick="openTopic('evaluation')">Evaluation Period</div>
+      <div class="title-button" style="top: 73%; right: 3%;" onclick="openTopic('recipients')">Recipients of GIA Funds</div>
+      <div class="challenge-button" onclick="startQuiz()"> TRUE OR FALSE CHALLENGE</div>
     </div>
-
-    <!-- Titles -->
-    <div class="title-button" style="top: 17%; left: 3%;" onclick="openTopic('mandate')">Mandate</div>
-    <div class="title-button" style="top: 19%; right: 3%;" onclick="openTopic('funding')">Funding Agencies</div>
-
-    <div class="title-button" style="top: 27%; left: 3%;" onclick="openTopic('avail')">Who may avail?</div>
-    <div class="title-button" style="top: 28%; right: 3%;" onclick="openTopic('objective')">Objective</div>
-
-    <div class="title-button" style="top: 60%; right: 3%;" onclick="openTopic('timeline')">Timeline</div>
-
-    <div class="title-button" style="top: 65%; left: 3%;" onclick="openTopic('requirements')">Requirements</div>
-    <div class="title-button" style="top: 68%; right: 3%;" onclick="openTopic('coverage')">Assistance Coverage</div>
-
-    <div class="title-button" style="top: 75%; left: 3%;" onclick="openTopic('evaluation')">Evaluation Period</div>
-    <div class="title-button" style="top: 82%; right: 3%;" onclick="openTopic('recipients')">Recipients of GIA Funds</div>
   </div>
-</div>
 
-<!-- DETAIL SCREEN -->
-<div id="detailScreen" class="screen">
-  <div id="detailImage" class="detail-image"></div>
+  <!-- DETAIL SCREEN -->
+  <div id="detailScreen" class="screen">
+    <div id="detailImage" class="detail-image"></div>
 
-  <button class="back-button" onclick="goHome()">← BACK</button>
-  <button id="prevBtn" class="nav-button nav-left" onclick="prevSlide()">◀</button>
-  <button id="nextBtn" class="nav-button nav-right" onclick="nextSlide()">▶</button>
-</div>
+    <button class="back-button" onclick="goHome()">← BACK</button>
+    <button id="prevBtn" class="nav-button nav-left" onclick="prevSlide()">◀</button>
+    <button id="nextBtn" class="nav-button nav-right" onclick="nextSlide()">▶</button>
+  </div>
 
-<!-- FULLSCREEN BUTTON -->
-<button id="fullscreenBtn" onclick="openFullscreen()"
-  style="position:fixed; bottom:2%; right:2%; z-index:999; padding:1vh 2vh;
-  background:#ffc800; color:#000; border:none; border-radius:8px; font-weight:700;
-  cursor:pointer; box-shadow:0 0 10px rgba(0,0,0,0.6);">
-  ⛶ Fullscreen
-</button>
+  <!-- FULLSCREEN BUTTON -->
+  <button id="fullscreenBtn" onclick="openFullscreen()"
+    style="position:fixed; bottom:2%; right:2%; z-index:5; padding:1vh 2vh;
+    background:#ffc800; color:#000; border:none; border-radius:8px; font-weight:700;
+    cursor:pointer; box-shadow:0 0 10px rgba(0,0,0,0.6);">
+    ⛶ Fullscreen
+  </button>
+  
+  <!-- QUIZ SCREEN -->
+  <div id="quizScreen" class="screen" style="display:none;
+      background:url('background.png') no-repeat center center;
+      background-size:cover; z-index:20;">
 
-<script>
-function openFullscreen() {
-  const elem = document.documentElement;
-  if (elem.requestFullscreen) elem.requestFullscreen();
-  else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
-  else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
-}
+    <div id="quizBox" style="
+        position:absolute; top:20%; left:50%; transform:translateX(-50%);
+        width:80%; text-align:center; color:white;">
+        
+        <h1 id="quizQuestion" style="
+            font-size:4vh; 
+            font-weight:900;
+            text-shadow:0 0 12px #000;">Question</h1>
 
-const topicImages = {
-  mandate: ["mandate.png"],
-  avail: ["who may avail.png"],
-  funding: ["funding agencies.png"],
-  objective: ["objective.png"],
-  timeline: ["timeline dost.png", "timeline non dost.png"],
-  requirements: ["requirements1.png", "requirements2.png"],
-  coverage: ["assistancecoverage.png"],
-  evaluation: ["evaluationperiod.png"],
-  recipients: ["recipient.png"]
-};
+        <div id="quizButtons" style="margin-top:8vh;">
+          <button onclick="answer(true)" style="
+              font-size:3vh; padding:2vh 4vh; margin-right:4vh;
+              border:none; border-radius:12px; cursor:pointer;
+              background:#00c853; color:white; font-weight:900;
+              box-shadow:0 0 12px rgba(0,0,0,0.6);">
+              TRUE
+          </button>
 
-let currentTopic = null;
-let currentIndex = 0;
+          <button onclick="answer(false)" style="
+              font-size:3vh; padding:2vh 4vh;
+              border:none; border-radius:12px; cursor:pointer;
+              background:#d50000; color:white; font-weight:900;
+              box-shadow:0 0 12px rgba(0,0,0,0.6);">
+              FALSE
+          </button>
+        </div>
+    </div>
+  </div>
 
-const homeScreen = document.getElementById("homeScreen");
-const detailScreen = document.getElementById("detailScreen");
-const detailImage = document.getElementById("detailImage");
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
+  <script>
+    function openFullscreen() {
+      const elem = document.documentElement;
+      if (elem.requestFullscreen) elem.requestFullscreen();
+      else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+      else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+    }
 
-function openTopic(key) {
-  const slides = topicImages[key];
-  if (!slides || slides.length === 0) {
-    alert("No slide image set for topic: " + key);
-    return;
-  }
-  currentTopic = key;
-  currentIndex = 0;
-  showSlide();
-  homeScreen.style.display = "none";
-  detailScreen.style.display = "block";
-}
+    const topicImages = {
+      mandate: ["mandate.png"],
+      avail: ["who may avail.png"],
+      funding: ["funding agencies.png"],
+      objective: ["objective.png"],
+      timeline: ["timeline dost.png", "timeline non dost.png"],
+      requirements: ["requirements1.png", "requirements2.png"],
+      coverage: ["assistancecoverage.png"],
+      evaluation: ["evaluationperiod.png"],
+      recipients: ["recipient.png"],
+      challenge: ["challenge.png"]
+    };
 
-function showSlide() {
-  const slides = topicImages[currentTopic];
-  if (!slides) return;
-  detailImage.style.backgroundImage = `url('${slides[currentIndex]}')`;
-  prevBtn.style.display = nextBtn.style.display = (slides.length > 1) ? "block" : "none";
-}
+    let currentTopic = null;
+    let currentIndex = 0;
 
-function prevSlide() {
-  const slides = topicImages[currentTopic];
-  if (!slides || slides.length <= 1) return;
-  currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-  showSlide();
-}
+    const homeScreen   = document.getElementById("homeScreen");
+    const detailScreen = document.getElementById("detailScreen");
+    const detailImage  = document.getElementById("detailImage");
+    const prevBtn      = document.getElementById("prevBtn");
+    const nextBtn      = document.getElementById("nextBtn");
+    const quizScreen   = document.getElementById("quizScreen");
 
-function nextSlide() {
-  const slides = topicImages[currentTopic];
-  if (!slides || slides.length <= 1) return;
-  currentIndex = (currentIndex + 1) % slides.length;
-  showSlide();
-}
+    function openTopic(key) {
+      const slides = topicImages[key];
+      if (!slides || slides.length === 0) {
+        alert("No slide image set for topic: " + key);
+        return;
+      }
+      currentTopic = key;
+      currentIndex = 0;
+      showSlide();
+      homeScreen.style.display = "none";
+      detailScreen.style.display = "block";
+    }
 
-function goHome() {
-  detailScreen.style.display = "none";
-  homeScreen.style.display = "block";
-}
-</script>
+    function showSlide() {
+      const slides = topicImages[currentTopic];
+      if (!slides) return;
+      detailImage.style.backgroundImage = `url('${slides[currentIndex]}')`;
+      prevBtn.style.display = nextBtn.style.display = (slides.length > 1) ? "block" : "none";
+    }
+
+    function prevSlide() {
+      const slides = topicImages[currentTopic];
+      if (!slides || slides.length <= 1) return;
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      showSlide();
+    }
+
+    function nextSlide() {
+      const slides = topicImages[currentTopic];
+      if (!slides || slides.length <= 1) return;
+      currentIndex = (currentIndex + 1) % slides.length;
+      showSlide();
+    }
+
+    function goHome() {
+      detailScreen.style.display = "none";
+      quizScreen.style.display   = "none";
+      homeScreen.style.display   = "block";
+    }
+
+    /* --------- QUIZ LOGIC ---------- */
+
+    const quizQuestions = [
+      {
+        q: "Foreign nationals may directly apply for DOST-GIA funding.",
+        correct: false
+      },
+      {
+        q: "One objective of GIA is to improve productivity and quality of life through technology.",
+        correct: true
+      },
+      {
+        q: "A clearance from previous GIA-funded projects is required when applying again.",
+        correct: true
+      },
+      {
+        q: "Private institutions are NOT allowed to apply for GIA.",
+        correct: false
+      },
+      {
+        q: "DOST's Monitoring & Evaluation protocol takes 45 days.",
+        correct: false
+      }
+    ];
+
+    let quizIndex = 0;
+    let score = 0;
+
+    function startQuiz() {
+      homeScreen.style.display   = "none";
+      detailScreen.style.display = "none";
+      quizScreen.style.display   = "block";
+      quizIndex = 0;
+      score = 0;
+
+      // reset question + buttons in case this is a replay
+      document.getElementById("quizBox").innerHTML = `
+        <h1 id="quizQuestion" style="
+            font-size:4vh; 
+            font-weight:900;
+            text-shadow:0 0 12px #000;">Question</h1>
+
+        <div id="quizButtons" style="margin-top:8vh;">
+          <button onclick="answer(true)" style="
+              font-size:3vh; padding:2vh 4vh; margin-right:4vh;
+              border:none; border-radius:12px; cursor:pointer;
+              background:#00c853; color:white; font-weight:900;
+              box-shadow:0 0 12px rgba(0,0,0,0.6);">
+              TRUE
+          </button>
+
+          <button onclick="answer(false)" style="
+              font-size:3vh; padding:2vh 4vh;
+              border:none; border-radius:12px; cursor:pointer;
+              background:#d50000; color:white; font-weight:900;
+              box-shadow:0 0 12px rgba(0,0,0,0.6);">
+              FALSE
+          </button>
+        </div>
+      `;
+      loadQuiz();
+    }
+
+    function loadQuiz() {
+      if (quizIndex >= quizQuestions.length) {
+        endQuiz();
+        return;
+      }
+      document.getElementById("quizQuestion").innerHTML =
+        "Question " + (quizIndex + 1) + "<br>" + quizQuestions[quizIndex].q;
+    }
+
+    function answer(ans) {
+      if (ans === quizQuestions[quizIndex].correct) {
+        score++;
+      }
+      quizIndex++;
+      loadQuiz();
+    }
+
+    function endQuiz() {
+      const total = quizQuestions.length;
+      const win = score > total / 2;
+
+      document.getElementById("quizQuestion").innerHTML =
+        win
+          ? `🎉 YOU WIN!<br><br>Score: ${score} / ${total}`
+          : `❌ YOU LOSE<br><br>Score: ${score} / ${total}`;
+
+      document.getElementById("quizQuestion").style.fontSize = "5vh";
+
+      document.getElementById("quizButtons").innerHTML = `
+        <button onclick="goHome()" style="
+          font-size:3vh; padding:2vh 4vh;
+          border:none; border-radius:12px; cursor:pointer;
+          background:#ffc800; color:black; font-weight:900;">
+          RETURN TO MENU
+        </button>
+      `;
+    }
+  </script>
+
 </body>
 </html>
